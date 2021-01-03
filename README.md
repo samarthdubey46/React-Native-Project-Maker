@@ -2,6 +2,7 @@
 
 
 **What is React Native Project Maker**
+
 	We all know as a react-native developer how frustrating it can be to make all the navigation and screens over and over again, so to speed up the process you can use this, you just have to type the layout of your app, and the python script will make the whole app, either for expo or for vanilla react-native using react-navigation v5
 
 **Requirements**
@@ -19,6 +20,7 @@
  5. After that you may see a dialog box for selecting the file location, select the location then your project will be ready for starting
  
  **How to write the layout file**
+ 
  Here is an example layout.yaml file
  The indent is 4 spaces
 
