@@ -1,0 +1,11 @@
+Drawer
+    Stack=>screenOptions={headerBackTitle:'s'}
+        IsLogged-
+        @Bottom=>screenOptions={unmountOnBlur:true}
+            Screen1=>tabBarIcon=name:newspaper,type:FontAwesome5;title='sa'
+            Screen2=>tabBarIcon=name:ios-fitness,type:Ionicons
+            Screen3=>tabBarIcon=name:cricket,type:MaterialCommunityIcons
+            Screen4=>tabBarIcon=name:my-location,type:MaterialIcons
+        endif
+        Login=>animationEnabled=true
+        Register
