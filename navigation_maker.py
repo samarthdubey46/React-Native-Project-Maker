@@ -54,6 +54,7 @@ def getWhite_Spaces(string: str):
 def getInput(path):
     with open(path, 'r') as file:
         lines = file.readlines()
+
     return lines
 
 
@@ -108,7 +109,8 @@ def returnIconType_name(string: str = "", isExpo: bool = False, Icons=set()):
     color = "color" if 'color' not in Options.keys() else Options['color']
     size = "size" if "size" not in Options.keys() else Options['size']
     Icons.add(IconType)
-    return_str = f'(focused,color,size) => <{IconType if isExpo else "Icon"} name="{IconName}" {ShouldReturnIconType(IconType, isExpo)}  color={"{" + color + "}"} size={"{" + size + "}"} />'
+    s = '{focused,color,size}'
+    return_str = f'({s}) => <{IconType if isExpo else "Icon"} name="{IconName}" {ShouldReturnIconType(IconType, isExpo)}  color={"{" + color + "}"} size={"{" + size + "}"} />'
     return return_str
 
 
@@ -118,7 +120,7 @@ Special_Options = {'tabBarIcon': returnIconType_name}
 def ObjectToString(object: dict):
     string = ""
     for key, value in object.items():
-        tempString = f"\t{key} : {value},"
+        tempString = f"{key} : {value},"
         string += tempString
     return returnWithCurlyBraces(string)
 
@@ -138,7 +140,7 @@ def GetScreenOptions(string: str, isExpo: bool, navigator: str, Icons: set = set
     for option in Options:
         name, value = option.split('=')
         Final_Options[name] = value if name not in Special_Options.keys() else Special_Options[name](value, isExpo,
-                                                                                                     Icons)
+                                                                        Icons)
     return ScreenName, Final_Options
 
 
@@ -199,7 +201,6 @@ def make_navigation(screenPath, templatePath, isExpo):
             With_Stack.append(True if single_line != single_line_ and ScreenName_temp.replace(count,'') == "Bottom" else False)
 
     nav_index = 1
-    print(With_Stack)
 
     # Debugging
     # for LevelName,ScreenName in zip(Levels,Screen_Names):
@@ -277,7 +278,7 @@ def make_navigation(screenPath, templatePath, isExpo):
             if ScreenObject['inside'] != navigator_index:
                 continue
             import_Line = f"import {ScreenObject['name']} from '{ScreenObject['path']}'\n"
-            Component_To_Written_Line = f'\t\t\t\t<Navigator.Screen name="{ScreenObject["name"]}" component={returnWithCurlyBraces(ScreenObject["name"] if not Should_Add_Screens_With_Stack else ScreenObject["name"] + "_")}/>\n\n'
+            Component_To_Written_Line = f'\t\t\t\t<Navigator.Screen options={returnWithCurlyBraces(ScreenObject["options"])} name="{ScreenObject["name"]}" component={returnWithCurlyBraces(ScreenObject["name"] if not Should_Add_Screens_With_Stack else ScreenObject["name"] + "_")}/>\n\n'
             if ScreenObject['inState'] == 'none':
                 if ScreenObject['options'] != 'none':
                     Component_To_Written_Line = f'\t\t\t\t<Navigator.Screen name="{ScreenObject["name"]}" options={returnWithCurlyBraces(ScreenObject["options"])} component={returnWithCurlyBraces(ScreenObject["name"] if not Should_Add_Screens_With_Stack else ScreenObject["name"] + "_" )}/>\n\n'

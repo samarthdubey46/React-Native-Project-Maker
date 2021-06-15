@@ -1,32 +1,25 @@
 import os
-import subprocess
+import sys
 import tkinter as tk
 from tkinter import filedialog
-import sys
-import time
 
 
-
-
-def create_project(name,isExpo:bool):
+def create_project(name, isExpo: bool):
     to_be_installed = [
-            "@react-native-community/masked-view",
-            "@react-navigation/bottom-tabs",
-            "@react-navigation/drawer",
-            "@react-navigation/native",
-            "@react-navigation/stack",
-            "react-native-dynamic-vector-icons",
-            "react-native-gesture-handler",
-            "react-native-reanimated",
-            "react-native-safe-area-context",
-            "react-native-screens",
-            "react-native-vector-icons"
-        ]
-    
-
+        "@react-native-community/masked-view",
+        "@react-navigation/bottom-tabs",
+        "@react-navigation/drawer",
+        "@react-navigation/native",
+        "@react-navigation/stack",
+        "react-native-dynamic-vector-icons",
+        "react-native-gesture-handler",
+        "react-native-reanimated",
+        "react-native-safe-area-context",
+        "react-native-screens",
+        "react-native-vector-icons"
+    ]
 
     if not isExpo:
-
         os.system(f'react-native init {name}')
 
     if isExpo:
@@ -34,14 +27,14 @@ def create_project(name,isExpo:bool):
         to_be_installed.remove('react-native-vector-icons')
         to_be_installed.append('@expo/vector-icons')
 
-    path = os.path.join(os.getcwd(),name) 
+    path = os.path.join(os.getcwd(), name)
     if not isExpo:
         gradle_copied = '\napply from: "../../node_modules/react-native-vector-icons/fonts.gradle"'
-        android_path = os.path.join(path,os.path.join('android','app'))
-        gradle_path = os.path.join(android_path,'build.gradle')
-        with open(gradle_path,'a') as file:
+        android_path = os.path.join(path, os.path.join('android', 'app'))
+        gradle_path = os.path.join(android_path, 'build.gradle')
+        with open(gradle_path, 'a') as file:
             file.write(gradle_copied)
-    src_path = os.path.join(path,'src')
+    src_path = os.path.join(path, 'src')
     os.mkdir(src_path)
     files = [
         "navigation_template.js",
@@ -65,13 +58,15 @@ def create_project(name,isExpo:bool):
     else:
         os.system(f'yarn add {sd} ')
     print("Made A React Native Project")
-if(len(sys.argv) == 3):
+
+
+if (len(sys.argv) == 3):
     name = sys.argv[1]
     isExpo = False
     isdds = sys.argv[2]
     if isdds == "expo":
-        isExpo = True   
-    create_project(name,isExpo)
+        isExpo = True
+    create_project(name, isExpo)
 else:
     name = input("Enter The Name Of The App ")
     isExpo = False
@@ -89,7 +84,7 @@ else:
         'layout.yaml',
         'react_native_project.py'
     ]
-    if(file_path != os.getcwd()):
+    if (file_path != os.getcwd()):
         for i in files:
             os.system(f'cp {i} {file_path}')
         os.chdir(file_path)
@@ -98,4 +93,3 @@ else:
             os.system(f'rm {i}')
     else:
         os.system(f'python3 react_native_project.py {name} {isdds}')
-
