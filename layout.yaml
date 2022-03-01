@@ -1,15 +1,15 @@
-Stack
-    IsLogged-
-    SingleDevice
-    DeviceSettingsUpdate
-    TempratureLogs
-    DeviceSlots
-    ProfileUpdate
-    @Bottom=>tedt=s
-        Dashboard=>tabBarIcon=name:home,type:AntDesign
-        Devices=>tabBarIcon=name:devices,type:MaterialIcons
-        Profile=>tabBarIcon=name:user,type:Feather
-    endif   
-    Login
-    OTP
-    Forgot_Password
+Drawer
+    Stack
+        IsLogged-
+        AddComplaint
+        MyComplaints
+        Profile
+        ProfileUpdate
+        @Bottom
+            Complaints=>tabBarIcon=name:vote,type:MaterialCommunityIcons
+            Home=>tabBarIcon=name:home,type:AntDesign
+            Info=>tabBarIcon=name:information-circle-outline,type:Ionicons
+        endif
+        Login
+        Register
+        Forgot_Password

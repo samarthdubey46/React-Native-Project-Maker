@@ -128,12 +128,12 @@ def ObjectToString(object: dict):
 def GetScreenOptions(string: str, isExpo: bool, navigator: str, Icons: set = set()):
     # Home=>icon=name:heart,type:AntDesign;title=green
     string = string.strip()
-    Icon = 'none'
-    Type = 'none'
-    ScreenName = 'none'
+    Icon = 'null'
+    Type = 'null'
+    ScreenName = 'null'
     Options = string.split("=>")
     if len(Options) == 1:
-        return Options.pop(0), 'none'
+        return Options.pop(0), 'null'
     ScreenName = Options.pop(0)
     Options = Options[0].split(';')
     Final_Options = {}
@@ -170,7 +170,7 @@ def make_navigation(screenPath, templatePath, isExpo):
     Icons = set()
     States = []
     FinalStates = {}
-    CurrentState = 'none'
+    CurrentState = 'null'
     With_Stack = []
     # Getting Levels,Screen,Navigaotrs
     for index, single_line_ in enumerate(lines):
@@ -182,11 +182,11 @@ def make_navigation(screenPath, templatePath, isExpo):
             CurrentState = name_without_spaces
             # continue
         if name_without_spaces == 'endif':
-            CurrentState = 'none'
+            CurrentState = 'null'
             # continue
-        ScreenName_temp, Options1 = GetScreenOptions(name_without_spaces, isExpo, 'none', Icons)
-        Options = 'none'
-        if Options1 != 'none':
+        ScreenName_temp, Options1 = GetScreenOptions(name_without_spaces, isExpo, 'null', Icons)
+        Options = 'null'
+        if Options1 != 'null':
             Options = ObjectToString(Options1)
         if ScreenName_temp in Navigators:
             ScreenName_temp += count
@@ -234,7 +234,7 @@ def make_navigation(screenPath, templatePath, isExpo):
     Navigators_Names = {i: '' for i in Navigators}
     for i, j in zip(Navigators_Names.keys(), Options_Nav):
         line = '\t\t<Navigator.Navigator'
-        if j != 'none':
+        if j != 'null':
             for z, k in j.items():
                 line += f" {z}={returnWithCurlyBraces(k)}"
         line += '>\n'
@@ -244,9 +244,9 @@ def make_navigation(screenPath, templatePath, isExpo):
         States_Names_With_Navigator_Index[value].append(key)
         States_Lines_To_Be_Written[value].append(f'\tconst [{key},change{key}] = useState(false)\n')
     for j, i in enumerate(Final_Screen_Objects):
-        if i['inState'] != 'none' and i['inState'].replace('-', "") not in States_Names_With_Navigator_Index[
+        if i['inState'] != 'null' and i['inState'].replace('-', "") not in States_Names_With_Navigator_Index[
             i['inside']]:
-            Final_Screen_Objects[j]['inState'] = 'none'
+            Final_Screen_Objects[j]['inState'] = 'null'
 
     # Can Comment Below TO Stop Work
 
@@ -279,8 +279,8 @@ def make_navigation(screenPath, templatePath, isExpo):
                 continue
             import_Line = f"import {ScreenObject['name']} from '{ScreenObject['path']}'\n"
             Component_To_Written_Line = f'\t\t\t\t<Navigator.Screen options={returnWithCurlyBraces(ScreenObject["options"])} name="{ScreenObject["name"]}" component={returnWithCurlyBraces(ScreenObject["name"] if not Should_Add_Screens_With_Stack else ScreenObject["name"] + "_")}/>\n\n'
-            if ScreenObject['inState'] == 'none':
-                if ScreenObject['options'] != 'none':
+            if ScreenObject['inState'] == 'null':
+                if ScreenObject['options'] != 'null':
                     Component_To_Written_Line = f'\t\t\t\t<Navigator.Screen name="{ScreenObject["name"]}" options={returnWithCurlyBraces(ScreenObject["options"])} component={returnWithCurlyBraces(ScreenObject["name"] if not Should_Add_Screens_With_Stack else ScreenObject["name"] + "_" )}/>\n\n'
                 Components.append(Component_To_Written_Line)
             else:
