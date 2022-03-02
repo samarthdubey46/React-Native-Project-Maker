@@ -1,6 +1,6 @@
 const fs = require('fs');
 const {navigators, tabLength} = require('./const');
-const {getFile, getIndent} = require("./helpers");
+const {getFile, getIndent, isFloat} = require("./helpers");
 
 
 const processFile = async (file) => {
@@ -15,6 +15,10 @@ const processFile = async (file) => {
     let lastIndent = 0;
     lines.every((line, index) => {
         let indent = getIndent(line) / tabLength
+        if(isFloat(indent)) {
+            error.push('Indentation error: Tab length should be a multiple of 4')
+            return false
+        }
         let name = line.trim()
         console.log(indent,name)
         let isNavigator = navigators.includes(name)
@@ -29,7 +33,7 @@ const processFile = async (file) => {
             result[navigators_list[0]] = []
         else {
             if(lastIndent > indent)
-                currentNavigator--
+                currentNavigator-= lastIndent - indent
             result[navigators_list[currentNavigator]].push(isNavigator ? `${name}-${indent}-${index}` : name)
             if (isNavigator) {
                 let newObj = {}
@@ -50,5 +54,9 @@ const processFile = async (file) => {
 processFile('layout.yaml').then(result => {
     console.log(result)
 })
+
+
+module.exports.processFile = processFile
+
 //{Drawer-0-0 : [],Stack-1-1 : [IsLogged,AddComplaint,Login,Register],Bottom-2-5 : [Complaints,Home],Stack-1-9 : [Test]}
 //{Drawer00 : [Stack-1-1,Stack-1-9]}

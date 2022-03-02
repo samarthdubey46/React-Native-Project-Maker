@@ -11,8 +11,9 @@ module.exports.getFile = async (file) => {
         return 'error'
     }
 }
-
-
+module.exports.isFloat = (n) => {
+    return Number(n) === n && n % 1 !== 0;
+}
 module.exports.getIndent = (str) => {
     let indent = 0;
     for (let i = 0; i < str.length; i++) {
